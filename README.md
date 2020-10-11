@@ -49,6 +49,10 @@ packet = Packet()
 payload =  Raw('sample message')
 # add layers
 packet.add_layers(ethernet, ip, udp, payload)
+# get a specific layer
+packet[Types.Layers.Ethernet]
+# check if layer exists
+Types.Layers.UDP in packet # equals True
 
 # prints size in bytes and layers size
 print (packet)
@@ -59,10 +63,12 @@ packet.print()
 packet.dissect(YOUR_RAW_BYTES)
 ```
 ### Send packet
-The function send receives a packet and optional network interface and socket object. Those will be created independewntly if are not provided.
+The function send receives a packet and optional network interface and socket object. Those will be created independently if not provided.
 ```Python
 from .layers import send
-send(packet)
+# pack layer into a bytes
+packed_packet = packet.pack()
+send(packed_packet)
 ```
 
 ### Examples
